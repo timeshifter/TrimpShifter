@@ -11,5 +11,5 @@
 
 var script = document.createElement('script');
 script.id = 'trimpshifter';
-script.src = 'https://raw.githubusercontent.com/timeshifter/TrimpShifter/master/TrimpShifter.js';
+script.src = 'https://timeshifter.github.io/TrimpShifter/TrimpShifter.js';
 document.head.appendChild(script);
