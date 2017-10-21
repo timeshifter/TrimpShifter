@@ -25,7 +25,7 @@ var TrimpShifter = {
     },
 
     Config: {
-        Version: '0.2.22',
+        Version: '0.2.24',
         LoopInterval: 100,
         Enabled: true,
         LogEnabled: true,
@@ -36,8 +36,8 @@ var TrimpShifter = {
         AutoBuyJobs: true,
         AutoBuyBuildings: true,
         AutoBuyUpgrades: true,
-        AutoBuyWeapons: true,
-        AutoBuyArmor: true,
+        AutoBuyWeapons: 1,
+        AutoBuyArmor: 1,
         AutoPrestige: true,
         GatewayFragmentRatio: 0.5,
         WormholeHeliumRatio: 0.0,
@@ -49,7 +49,7 @@ var TrimpShifter = {
             Farmer: 25,
             Lumberjack: 30,
             Miner: 40,
-            Scientist: 5
+            Scientist: 8
         },
         MaxTraps: function () {
             if (game.global.world < 5)
@@ -85,13 +85,26 @@ var TrimpShifter = {
 
         //add menu options
 
-        TrimpShifter.AddToggleSetting("Armor", function () { TrimpShifter.Settings.AutoBuyArmor = !TrimpShifter.Settings.AutoBuyArmor; });
-        TrimpShifter.AddToggleSetting("Buildings", function () { TrimpShifter.Settings.AutoBuyBuildings = !TrimpShifter.Settings.AutoBuyBuildings; });
-        TrimpShifter.AddToggleSetting("Jobs", function () { TrimpShifter.Settings.AutoBuyJobs = !TrimpShifter.Settings.AutoBuyJobs; });
-        TrimpShifter.AddToggleSetting("Storage", function () { TrimpShifter.Settings.AutoBuyStorage = !TrimpShifter.Settings.AutoBuyStorage; });
-        TrimpShifter.AddToggleSetting("Upgrades", function () { TrimpShifter.Settings.AutoBuyUpgrades = !TrimpShifter.Settings.AutoBuyUpgrades; });
-        TrimpShifter.AddToggleSetting("Prestige", function () { TrimpShifter.Settings.AutoPrestige = !TrimpShifter.Settings.AutoPrestige; });
-        TrimpShifter.AddToggleSetting("Weapons", function () { TrimpShifter.Settings.AutoBuyWeapons = !TrimpShifter.Settings.AutoBuyWeapons; });
+        TrimpShifter.AddSetting("Storage", "Auto-buy storage when at 50% capacity", function () { TrimpShifter.Settings.AutoBuyStorage = !TrimpShifter.Settings.AutoBuyStorage; });
+        TrimpShifter.AddSetting("Buildings", "Auto-buy non-helium buildings", function () { TrimpShifter.Settings.AutoBuyBuildings = !TrimpShifter.Settings.AutoBuyBuildings; });
+        TrimpShifter.AddSetting("Jobs", "Auto-buy jobs according to defined ratio", function () { TrimpShifter.Settings.AutoBuyJobs = !TrimpShifter.Settings.AutoBuyJobs; });
+        TrimpShifter.AddSetting("Upgrades", "Auto-buy non-equipment upgrades", function () { TrimpShifter.Settings.AutoBuyUpgrades = !TrimpShifter.Settings.AutoBuyUpgrades; });
+
+        TrimpShifter.AddSetting("Prestige", "Auto-buy equipment upgrades", function () { TrimpShifter.Settings.AutoPrestige = !TrimpShifter.Settings.AutoPrestige; });
+
+        TrimpShifter.AddSetting("Armor", "On: full auto-buy<br>Smart: auto-buy only if no prestige is available",
+            function () {
+                TrimpShifter.Settings.AutoBuyArmor = (TrimpShifter.Settings.AutoBuyArmor + 1) % 3;
+            },
+            ["Armor Auto-buy Off", "Armor Auto-buy On", "Armor Auto-buy Smart"]);
+
+
+
+        TrimpShifter.AddSetting("Weapons", "On: full auto-buy<br>Smart: auto-buy only if no prestige is available",
+            function () {
+                TrimpShifter.Settings.AutoBuyWeapons = (TrimpShifter.Settings.AutoBuyWeapons + 1) % 3;
+            },
+            ["Weapons Auto-buy Off", "Weapons Auto-buy On", "Weapons Auto-buy Smart"]);
 
 
 
@@ -100,10 +113,10 @@ var TrimpShifter = {
         TrimpShifter.Start();
     },
 
-    AddToggleSetting: function (name, t) {
+    AddSetting: function (name, desc, t, opts) {
         game.options.menu["ts_autoBuy" + name] = {
-            description: "Auto-buy " + name,
-            titles: ["Auto-buy " + name + " Off", "Auto-buy " + name + " On"],
+            description: desc,
+            titles: opts == undefined ? ["Auto-buy " + name + " Off", "Auto-buy " + name + " On"] : opts,
             extraTags: "trimpshifter",
             enabled: 1,
             onToggle: t
@@ -199,7 +212,7 @@ var TrimpShifter = {
 
 
 
-        if (TrimpShifter.Settings.AutoBuyWeapons) {
+        if (TrimpShifter.Settings.AutoBuyWeapons==1) {
 
 
             //level up equipment
@@ -218,7 +231,7 @@ var TrimpShifter = {
 
         }
 
-        if (TrimpShifter.Settings.AutoBuyArmor) {
+        if (TrimpShifter.Settings.AutoBuyArmor==1) {
 
 
             //level up equipment
