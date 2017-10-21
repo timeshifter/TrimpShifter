@@ -262,7 +262,7 @@ var TrimpShifter = {
                 }
             }
 
-            if (game.equipment.Shield.locked == 0 && game.equipment.Shield.level < 5 && && (TrimpShifter.Settings.AutoBuyArmor == 1 || (TrimpShifter.Settings.AutoBuyArmor == 2 && game.upgrades['Supershield'].locked == 1))) {
+            if (game.equipment.Shield.locked == 0 && game.equipment.Shield.level < 5 && (TrimpShifter.Settings.AutoBuyArmor == 1 || (TrimpShifter.Settings.AutoBuyArmor == 2 && game.upgrades['Supershield'].locked == 1))) {
                 TrimpShifter.BuyEquipment('Shield');
             }
 
