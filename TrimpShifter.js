@@ -25,7 +25,7 @@ var TrimpShifter = {
     },
 
     Config: {
-        Version: '0.2.20',
+        Version: '0.2.21',
         LoopInterval: 100,
         Enabled: true,
         LogEnabled: true,
@@ -392,7 +392,7 @@ var TrimpShifter = {
         }
 
 
-        var lim = 100;// Math.ceil(game.workspaces / 4);
+        var lim = Math.min(100, game.workspaces);// Math.ceil(game.workspaces / 4);
 
 
         while (lim > 0) {
