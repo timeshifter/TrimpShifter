@@ -257,8 +257,8 @@ var TrimpShifter = {
 
             for (var i = 0; i < armor.length; i++) {
 
-                if (!didBuy && game.equipment[armor[i]].locked == 0 && game.equipment[armor[i]].level < 11 && (TrimpShifter.Settings.AutoBuyArmor == 1 || (TrimpShifter.Settings.AutoBuyArmor == 2 && game.upgrades[armor[i][1]].locked == 1))) {
-                    didBuy = TrimpShifter.BuyEquipment(armor[i]);
+                if (!didBuy && game.equipment[armor[i][0]].locked == 0 && game.equipment[armor[i][0]].level < 11 && (TrimpShifter.Settings.AutoBuyArmor == 1 || (TrimpShifter.Settings.AutoBuyArmor == 2 && game.upgrades[armor[i][1]].locked == 1))) {
+                    didBuy = TrimpShifter.BuyEquipment(armor[i][0]);
                 }
             }
 
