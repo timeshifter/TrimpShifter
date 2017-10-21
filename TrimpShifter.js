@@ -70,6 +70,24 @@ var TrimpShifter = {
 
     Init: function () {
         console.log('TrimpShifter v.' + TrimpShifter.Config.Version);
+
+        var s = '<li role="presentation"  id="TrimpShifterTab" onclick="settingTab("TrimpShifter")" class="tabNotSelected settingTab"><a>TrimpShifter</a></li>';
+        var parent = document.getElementById('settingsTabs');
+        parent.children[0].append(s);
+
+        game.options.menu.ts_autoBuyBuildings = {
+            description: "Auto-buy buildings",
+            titles: ["Autobuy Buildings Off", "Autobuy Buildings On"],
+            extraTags: "general trimpshifter",
+            enabled: 1,
+            onToggle: function () {
+                TrimpShifter.Settings.AutoBuyBuildings = !TrimpShifter.Settings.AutoBuyBuildings;
+                this.enabled = this.enabled == 0 ? 1 : 0;
+            }
+        };
+
+
+
         TrimpShifter.Start();
     },
 
