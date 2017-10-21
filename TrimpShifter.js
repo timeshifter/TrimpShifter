@@ -71,7 +71,7 @@ var TrimpShifter = {
     Init: function () {
         console.log('TrimpShifter v.' + TrimpShifter.Config.Version);
 
-        //var s = '<li role="presentation"  id="TrimpShifterTab" onclick="settingTab("TrimpShifter")" class="tabNotSelected settingTab"><a>TrimpShifter</a></li>';
+        //create menu tab
         var li = document.createElement('li');
         li.setAttribute('role', 'presentation');
         li.setAttribute('id', 'TrimpShifterTab');
@@ -81,22 +81,34 @@ var TrimpShifter = {
         li_a.innerHTML = "TrimpShifter";
         li.append(li_a);
         var parent = document.getElementById('settingsTabs');
-
         parent.children[0].append(li);
 
-        game.options.menu.ts_autoBuyBuildings = {
-            description: "Auto-buy buildings",
-            titles: ["Autobuy Buildings Off", "Autobuy Buildings On"],
-            extraTags: "general trimpshifter",
-            enabled: 1,
-            onToggle: function () {
-                TrimpShifter.Settings.AutoBuyBuildings = !TrimpShifter.Settings.AutoBuyBuildings;
-            }
-        };
+        //add menu options
+
+        TrimpShifter.AddToggleSetting("Armor", function () { TrimpShifter.Settings.AutoBuyArmor = !TrimpShifter.Settings.AutoBuyArmor; });
+        TrimpShifter.AddToggleSetting("Buildings", function () { TrimpShifter.Settings.AutoBuyBuildings = !TrimpShifter.Settings.AutoBuyBuildings; });
+        TrimpShifter.AddToggleSetting("Jobs", function () { TrimpShifter.Settings.AutoBuyJobs = !TrimpShifter.Settings.AutoBuyJobs; });
+        TrimpShifter.AddToggleSetting("Storage", function () { TrimpShifter.Settings.AutoBuyStorage = !TrimpShifter.Settings.AutoBuyStorage; });
+        TrimpShifter.AddToggleSetting("Upgrades", function () { TrimpShifter.Settings.AutoBuyUpgrades = !TrimpShifter.Settings.AutoBuyUpgrades; });
+        TrimpShifter.AddToggleSetting("Prestige", function () { TrimpShifter.Settings.AutoPrestige = !TrimpShifter.Settings.AutoPrestige; });
+        TrimpShifter.AddToggleSetting("Weapons", function () { TrimpShifter.Settings.AutoBuyWeapons = !TrimpShifter.Settings.AutoBuyWeapons; });
+
+
 
 
 
         TrimpShifter.Start();
+    },
+
+    AddToggleSetting: function (name, t) {
+        game.options.menu["ts_autoBuy" + name] = {
+            description: "Auto-buy " + name,
+            titles: ["Auto-buy " + name + " Off", "Auto-buy " + name + " On"],
+            extraTags: "trimpshifter",
+            enabled: 1,
+            onToggle: t
+        };
+
     },
 
     MainLoop: function () {
