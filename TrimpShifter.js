@@ -25,7 +25,7 @@ var TrimpShifter = {
     },
 
     Config: {
-        Version: '0.2.21',
+        Version: '0.2.22',
         LoopInterval: 100,
         Enabled: true,
         LogEnabled: true,
@@ -71,9 +71,18 @@ var TrimpShifter = {
     Init: function () {
         console.log('TrimpShifter v.' + TrimpShifter.Config.Version);
 
-        var s = '<li role="presentation"  id="TrimpShifterTab" onclick="settingTab("TrimpShifter")" class="tabNotSelected settingTab"><a>TrimpShifter</a></li>';
+        //var s = '<li role="presentation"  id="TrimpShifterTab" onclick="settingTab("TrimpShifter")" class="tabNotSelected settingTab"><a>TrimpShifter</a></li>';
+        var li = document.createElement('li');
+        li.setAttribute('role', 'presentation');
+        li.setAttribute('id', 'TrimpShifterTab');
+        li.setAttribute('onclick', "settingTab('TrimpShifter')");
+        li.setAttribute('class', 'tabNotSelected settingTab');
+        var li_a = document.createElement('a');
+        li_a.innerHTML = "TrimpShifter";
+        li.append(li_a);
         var parent = document.getElementById('settingsTabs');
-        parent.children[0].append(s);
+
+        parent.children[0].append(li);
 
         game.options.menu.ts_autoBuyBuildings = {
             description: "Auto-buy buildings",
@@ -82,7 +91,6 @@ var TrimpShifter = {
             enabled: 1,
             onToggle: function () {
                 TrimpShifter.Settings.AutoBuyBuildings = !TrimpShifter.Settings.AutoBuyBuildings;
-                this.enabled = this.enabled == 0 ? 1 : 0;
             }
         };
 
