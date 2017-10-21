@@ -25,7 +25,7 @@ var TrimpShifter = {
     },
 
     Config: {
-        Version: '0.2.18',
+        Version: '0.2.19',
         LoopInterval: 100,
         Enabled: true,
         LogEnabled: true,
@@ -201,6 +201,7 @@ var TrimpShifter = {
                 'Gym',
                 'Nursery',
                 'Tribute',
+                'Collector',
                 'Wormhole',
                 'Gateway',
                 'Resort',
@@ -379,7 +380,7 @@ var TrimpShifter = {
         }
 
 
-        var lim = Math.ceil(game.workspaces / 4);
+        var lim = 100;// Math.ceil(game.workspaces / 4);
 
 
         while (lim > 0) {
