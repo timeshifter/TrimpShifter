@@ -230,7 +230,7 @@ var TrimpShifter = {
                 if (!didBuy &&
                     game.equipment[weapons[i][0]].locked == 0 &&
                     game.equipment[weapons[i][0]].level < 9
-                    && (TrimpShifter.Settings.AutoBuyWeapons==1 || (TrimpShifter.Settings.AutoBuyWeapons==2 && game.upgrades[weapons[i][1]].locked==1))
+                    && (TrimpShifter.Settings.AutoBuyWeapons==2 || (TrimpShifter.Settings.AutoBuyWeapons==1 && game.upgrades[weapons[i][1]].locked==1))
                 ) {
                     didBuy = TrimpShifter.BuyEquipment(weapons[i][0]);
                 }
@@ -257,12 +257,12 @@ var TrimpShifter = {
 
             for (var i = 0; i < armor.length; i++) {
 
-                if (!didBuy && game.equipment[armor[i][0]].locked == 0 && game.equipment[armor[i][0]].level < 11 && (TrimpShifter.Settings.AutoBuyArmor == 1 || (TrimpShifter.Settings.AutoBuyArmor == 2 && game.upgrades[armor[i][1]].locked == 1))) {
+                if (!didBuy && game.equipment[armor[i][0]].locked == 0 && game.equipment[armor[i][0]].level < 11 && (TrimpShifter.Settings.AutoBuyArmor == 2 || (TrimpShifter.Settings.AutoBuyArmor == 1 && game.upgrades[armor[i][1]].locked == 1))) {
                     didBuy = TrimpShifter.BuyEquipment(armor[i][0]);
                 }
             }
 
-            if (game.equipment.Shield.locked == 0 && game.equipment.Shield.level < 5 && (TrimpShifter.Settings.AutoBuyArmor == 1 || (TrimpShifter.Settings.AutoBuyArmor == 2 && game.upgrades['Supershield'].locked == 1))) {
+            if (game.equipment.Shield.locked == 0 && game.equipment.Shield.level < 5 && (TrimpShifter.Settings.AutoBuyArmor == 2 || (TrimpShifter.Settings.AutoBuyArmor == 1 && game.upgrades['Supershield'].locked == 1))) {
                 TrimpShifter.BuyEquipment('Shield');
             }
 
