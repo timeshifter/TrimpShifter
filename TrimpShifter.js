@@ -25,7 +25,7 @@ var TrimpShifter = {
     },
 
     Config: {
-        Version: '0.2.19',
+        Version: '0.2.20',
         LoopInterval: 100,
         Enabled: true,
         LogEnabled: true,
@@ -36,7 +36,8 @@ var TrimpShifter = {
         AutoBuyJobs: true,
         AutoBuyBuildings: true,
         AutoBuyUpgrades: true,
-        AutoBuyEquipment: true,
+        AutoBuyWeapons: true,
+        AutoBuyArmor: true,
         AutoPrestige: true,
         GatewayFragmentRatio: 0.5,
         WormholeHeliumRatio: 0.0,
@@ -160,12 +161,11 @@ var TrimpShifter = {
 
 
 
-        if (TrimpShifter.Settings.AutoBuyEquipment) {
+        if (TrimpShifter.Settings.AutoBuyWeapons) {
 
 
             //level up equipment
-            var weapons = ['Dagger', 'Mace', 'Battleaxe', 'Polearm', 'Greatsword'],
-                armor = ['Boots', 'Helmet', 'Pants', 'Breastplate', 'Shoulderguards'];
+            var weapons = ['Dagger', 'Mace', 'Battleaxe', 'Polearm', 'Greatsword'];
 
 
 
@@ -175,6 +175,19 @@ var TrimpShifter = {
                     TrimpShifter.BuyEquipment(weapons[i]);
                 }
             }
+
+
+
+        }
+
+        if (TrimpShifter.Settings.AutoBuyArmor) {
+
+
+            //level up equipment
+            var armor = ['Boots', 'Helmet', 'Pants', 'Breastplate', 'Shoulderguards'];
+
+
+
 
             for (var i = 0; i < armor.length; i++) {
 
@@ -189,7 +202,6 @@ var TrimpShifter = {
 
 
         }
-
 
 
 
