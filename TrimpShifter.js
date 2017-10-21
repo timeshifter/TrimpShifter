@@ -25,7 +25,7 @@ var TrimpShifter = {
     },
 
     Config: {
-        Version: '0.2.24',
+        Version: '0.2.25',
         LoopInterval: 100,
         Enabled: true,
         LogEnabled: true,
@@ -39,8 +39,7 @@ var TrimpShifter = {
         AutoBuyWeapons: 1,
         AutoBuyArmor: 1,
         AutoPrestige: true,
-        GatewayFragmentRatio: 0.5,
-        WormholeHeliumRatio: 0.0,
+        GatewayFragmentRatio: 0.4,
         StorageRatio: 0.5,
         MaxExplorers: function () {
             return game.global.world * 5;
@@ -96,7 +95,7 @@ var TrimpShifter = {
             function () {
                 TrimpShifter.Settings.AutoBuyArmor = (TrimpShifter.Settings.AutoBuyArmor + 1) % 3;
             },
-            ["Armor Auto-buy Off", "Armor Auto-buy On", "Armor Auto-buy Smart"]);
+            ["Armor Auto-buy Off", "Armor Auto-buy Smart", "Armor Auto-buy On"]);
 
 
 
@@ -104,7 +103,7 @@ var TrimpShifter = {
             function () {
                 TrimpShifter.Settings.AutoBuyWeapons = (TrimpShifter.Settings.AutoBuyWeapons + 1) % 3;
             },
-            ["Weapons Auto-buy Off", "Weapons Auto-buy On", "Weapons Auto-buy Smart"]);
+            ["Weapons Auto-buy Off", "Weapons Auto-buy Smart", "Weapons Auto-buy On"]);
 
 
 
@@ -212,18 +211,28 @@ var TrimpShifter = {
 
 
 
-        if (TrimpShifter.Settings.AutoBuyWeapons==1) {
+        if (TrimpShifter.Settings.AutoBuyWeapons>0) {
 
 
             //level up equipment
-            var weapons = ['Dagger', 'Mace', 'Battleaxe', 'Polearm', 'Greatsword'];
+            var weapons = [
+                ['Dagger','Dagadder'],
+                ['Mace','Megamace'],
+                ['Battleaxe','Axeidic'],
+                ['Polearm','Polierarm'],
+                ['Greatsword','Greatersword']
+            ];
 
-
+            var didBuy = false;
 
             for (var i = 0; i < weapons.length; i++) {
 
-                if (game.equipment[weapons[i]].locked == 0 && game.equipment[weapons[i]].level < 9) {
-                    TrimpShifter.BuyEquipment(weapons[i]);
+                if (!didBuy &&
+                    game.equipment[weapons[i][0]].locked == 0 &&
+                    game.equipment[weapons[i][0]].level < 9
+                    && (TrimpShifter.Settings.AutoBuyWeapons==1 || (TrimpShifter.Settings.AutoBuyWeapons==2 && game.upgrades[weapons[i][1]].locked==1))
+                ) {
+                    didBuy = TrimpShifter.BuyEquipment(weapons[i][0]);
                 }
             }
 
@@ -231,23 +240,29 @@ var TrimpShifter = {
 
         }
 
-        if (TrimpShifter.Settings.AutoBuyArmor==1) {
+        if (TrimpShifter.Settings.AutoBuyArmor>0) {
 
 
             //level up equipment
-            var armor = ['Boots', 'Helmet', 'Pants', 'Breastplate', 'Shoulderguards'];
+            var armor = [
+                ['Boots','Bootboost'],
+                ['Helmet','Hellishmet'],
+                ['Pants','Pantastic'],
+                ['Breastplate','Bestplate'],
+                ['Shoulderguards','Smoldershoulder']
+            ];
 
 
-
+            var didBuy = false;
 
             for (var i = 0; i < armor.length; i++) {
 
-                if (game.equipment[armor[i]].locked == 0 && game.equipment[armor[i]].level < 11) {
-                    TrimpShifter.BuyEquipment(armor[i]);
+                if (!didBuy && game.equipment[armor[i]].locked == 0 && game.equipment[armor[i]].level < 11 && (TrimpShifter.Settings.AutoBuyArmor == 1 || (TrimpShifter.Settings.AutoBuyArmor == 2 && game.upgrades[armor[i][1]].locked == 1))) {
+                    didBuy = TrimpShifter.BuyEquipment(armor[i]);
                 }
             }
 
-            if (game.equipment.Shield.locked == 0 && game.equipment.Shield.level < 5) {
+            if (game.equipment.Shield.locked == 0 && game.equipment.Shield.level < 5 && && (TrimpShifter.Settings.AutoBuyArmor == 1 || (TrimpShifter.Settings.AutoBuyArmor == 2 && game.upgrades['Supershield'].locked == 1))) {
                 TrimpShifter.BuyEquipment('Shield');
             }
 
@@ -265,7 +280,6 @@ var TrimpShifter = {
                 'Nursery',
                 'Tribute',
                 'Collector',
-                'Wormhole',
                 'Gateway',
                 'Resort',
                 'Hotel',
@@ -277,12 +291,7 @@ var TrimpShifter = {
             for (var i = 0; i < buildings.length; i++) {
                 if (game.buildings[buildings[i]].locked == 0) {
                     var build = true;
-                    if (buildings[i] == 'Wormhole') {
-                        var h = Math.floor(10 * Math.pow(1.075, game.buildings.Wormhole.owned));
-                        if (game.resources.helium.owned * TrimpShifter.Settings.WormholeHeliumRatio < h)
-                            build = false;
-                    }
-                    else if (buildings[i] == 'Gateway') {
+                    if (buildings[i] == 'Gateway') {
                         var f = game.buildings.Gateway.cost.fragments[0] * Math.pow(game.buildings.Gateway.cost.fragments[1], game.buildings.Gateway.purchased);
                         if (game.resources.fragments.owned * TrimpShifter.Settings.GatewayFragmentRatio < f)
                             build = false;
@@ -298,9 +307,9 @@ var TrimpShifter = {
         }
 
 
-        if (!game.global.fighting && game.upgrades.Bloodlust.owned == 0 && game.upgrades.Battle.owned == 1) {
-            fightManual();
-        }
+        //if (!game.global.fighting && game.upgrades.Bloodlust.owned == 0 && game.upgrades.Battle.owned == 1) {
+        //    fightManual();
+        //}
 
 
 
@@ -538,6 +547,7 @@ var TrimpShifter = {
             if (TrimpShifter.Config.LogEnabled)
                 console.log('TrimpShifter - buying equipment ' + what);
         }
+        return canBuy;
     },
     Debug: function (msg) {
 
