@@ -25,7 +25,7 @@ var TrimpShifter = {
     },
 
     Config: {
-        Version: '0.2.25',
+        Version: '0.2.26',
         LoopInterval: 100,
         Enabled: true,
         LogEnabled: true,
@@ -171,13 +171,37 @@ var TrimpShifter = {
 
 
         if (TrimpShifter.Settings.AutoBuyUpgrades) {
-            var priorityUpgrades = ['Anger', 'Battle', 'Blockmaster', 'Bloodlust', 'Bounty', 'Coordination', 'Efficiency', 'Egg', 'Explorers', 'Gymystic', 'Miners', 'Potency', 'Scientists', 'Speedfarming', 'Speedlumber', 'Speedminer', 'Speedscience', 'TrainTacular', 'Trainers', 'Trapstorm', 'UberHotel', 'UberHouse', 'UberHut', 'UberMansion', 'UberResort'];
+            var priorityUpgrades = [
+                'Anger',
+                'Blockmaster',
+                'Bounty',
+                'Coordination',
+                'Efficiency',
+                'Gymystic',
+                'Potency',
+                'Megafarming',
+                'Megalumber',
+                'Megaminer',
+                'Megascience',
+                'Speedfarming',
+                'Speedlumber',
+                'Speedminer',
+                'Speedscience',
+                'TrainTacular',
+                'Trapstorm',
+                'UberHotel',
+                'UberHouse',
+                'UberHut',
+                'UberMansion',
+                'UberResort'
+            ];
 
 
             for (var i = 0; i < priorityUpgrades.length; i++) {
                 if (game.upgrades[priorityUpgrades[i]].locked == 0) {
 
-                    TrimpShifter.BuyUpgrade(priorityUpgrades[i]);
+                    if (TrimpShifter.BuyUpgrade(priorityUpgrades[i]))
+                        break;
 
                 }
             }
@@ -279,6 +303,7 @@ var TrimpShifter = {
                 'Gym',
                 'Nursery',
                 'Tribute',
+                'Warpstation',
                 'Collector',
                 'Gateway',
                 'Resort',
@@ -298,7 +323,8 @@ var TrimpShifter = {
                     }
 
                     if (build) {
-                        TrimpShifter.BuyBuilding(buildings[i]);
+                        if (TrimpShifter.BuyBuilding(buildings[i]))
+                            break;
                     }
                 }
             }
