@@ -25,7 +25,7 @@ var TrimpShifter = {
     },
 
     Config: {
-        Version: '0.2.26',
+        Version: '0.2.27',
         LoopInterval: 100,
         Enabled: true,
         LogEnabled: true,
@@ -177,12 +177,14 @@ var TrimpShifter = {
                 'Bounty',
                 'Coordination',
                 'Efficiency',
+                'Gigastation',
                 'Gymystic',
                 'Potency',
                 'Megafarming',
                 'Megalumber',
                 'Megaminer',
                 'Megascience',
+                'Speedexplorer',
                 'Speedfarming',
                 'Speedlumber',
                 'Speedminer',
